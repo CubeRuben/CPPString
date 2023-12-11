@@ -32,9 +32,11 @@ public:
 	const char* GetCharArray();
 
 	String GetSubString(int Start, int End);
-	String ToUpperCase();
-	String ToLowerCase();
+	String& ToUpperCase();
+	String& ToLowerCase();
+	String& Replace(const char& CharToReplace, const char& Replacement);
 
+	const char& operator[](int index);
 
 	friend std::ostream& operator<<(std::ostream& Output, const String& String);
 };

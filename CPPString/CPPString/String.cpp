@@ -27,12 +27,12 @@ char* String::CopyCharArray(const char* OriginalArray)
 
 char* String::CopyCharArray(const char* OriginalArray, int CopyLength)
 {
-	CopyLength++;
-
 	if (CopyLength <= 0) 
 	{
 		return GetNoneString();
 	}
+
+	CopyLength++;
 
 	char* copy = new char[CopyLength];
 
@@ -78,41 +78,54 @@ const char* String::GetCharArray()
 
 String String::GetSubString(int Start, int End)
 {
-	return String(CopyCharArray(&CharArray[Start], End - Start + 1));
+	return String(CopyCharArray(&(*this)[Start], End - Start + 1));
 }
 
-String String::ToUpperCase()
+String& String::ToUpperCase()
 {
-	String newStr(*this);
-
-	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
+	for (int i = 0; CharArray[i] != '\0'; i++)
 	{
-		const int charIndex = (int)newStr.CharArray[i];
+		const int charIndex = (int)CharArray[i];
 
 		if (charIndex >= (int)'a' && charIndex <= (int)'z')
 		{
-			newStr.CharArray[i] = charIndex - CharacterCaseOffset;
+			CharArray[i] = charIndex - CharacterCaseOffset;
 		}
 	}
+
+	return *this;
+}
+
+String& String::ToLowerCase()
+{
+	for (int i = 0; CharArray[i] != '\0'; i++)
+	{
+		const int charIndex = (int)CharArray[i];
+
+		if (charIndex >= (int)'A' && charIndex <= (int)'Z')
+		{
+			CharArray[i] = charIndex + CharacterCaseOffset;
+		}
+	}
+
+	return *this;
+}
+
+String& String::Replace(const char& CharToReplace, const char& Replacement)
+{
+	String newStr(*this);
+
+
 
 	return newStr;
 }
 
-String String::ToLowerCase()
+const char& String::operator[](int index)
 {
-	String newStr(*this);
+	if (index < 0 || index >= GetLength())
+		throw std::out_of_range("Requested character out of range");
 
-	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
-	{
-		const int charIndex = (int)newStr.CharArray[i];
-
-		if (charIndex >= (int)'A' && charIndex <= (int)'Z')
-		{
-			newStr.CharArray[i] = charIndex + CharacterCaseOffset;
-		}
-	}
-
-	return newStr;
+	return CharArray[index];
 }
 
 std::ostream& operator<<(std::ostream& Output, const String& String)
