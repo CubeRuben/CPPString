@@ -8,7 +8,6 @@ public:
 
 	String();
 	String(const char* CharArray);
-	String(const char* CharArray, int Length);
 	String(const String& Other);
 
 	~String();
@@ -18,17 +17,17 @@ protected:
 	static const int CharacterCaseOffset;
 	static char* GetNoneString();
 
-	static char* CopyCharArray(const char* OriginalArray, int Length);
-	static char* CopyCharArray(const char* OriginalArray, int Length, int CopyLength);
+	static int CalculateCharArrayLength(const char* CharArray);
+	static char* CopyCharArray(const char* OriginalArray);
+	static char* CopyCharArray(const char* OriginalArray, int CopyLength);
 
 private:
 
 	char* CharArray;
-	int Length;
 
 public:
 
-	int GetLength() { return Length; }
+	int GetLength();
 
 	const char* GetCharArray();
 

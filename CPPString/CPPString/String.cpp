@@ -11,65 +11,54 @@ char* String::GetNoneString()
 	return newChar;
 }
 
-char* String::CopyCharArray(const char* OriginalArray, int Length)
+int String::CalculateCharArrayLength(const char* CharArray)
 {
-	return CopyCharArray(OriginalArray, Length, Length);
+	int length = 0;
+
+	while (CharArray[length++] != '\0') {}
+
+	return length;
 }
 
-char* String::CopyCharArray(const char* OriginalArray, int Length, int CopyLength)
+char* String::CopyCharArray(const char* OriginalArray)
 {
-	char* copy = new char[Length];
+	return CopyCharArray(OriginalArray, CalculateCharArrayLength(OriginalArray) - 1);
+}
 
-	//Проверка, если длина копирования больше длины массива
-	const int iterateLength = std::min(CopyLength, Length);
+char* String::CopyCharArray(const char* OriginalArray, int CopyLength)
+{
+	CopyLength++;
 
-	for (int i = 0; i < iterateLength; i++)
+	if (CopyLength <= 0) 
+	{
+		return GetNoneString();
+	}
+
+	char* copy = new char[CopyLength];
+
+	for (int i = 0; i < CopyLength - 1; i++)
 	{
 		copy[i] = OriginalArray[i];
 	}
+
+	copy[CopyLength - 1] = '\0';
 
 	return copy;
 }
 
 String::String()
 {
-	Length = 0;
 	CharArray = GetNoneString();
 }
 
 String::String(const char* CharArray)
 {
-	Length = 0;
-
-	while (true) 
-	{
-		if (CharArray[Length] == '\0') 
-			break;
-
-		Length++;
-	}
-
-	this->CharArray = CopyCharArray(CharArray, Length);
-}
-
-String::String(const char* CharArray, int Length)
-{
-	this->Length = std::max(0, Length);
-
-	if (Length < 0)
-	{
-		this->CharArray = GetNoneString();
-	}
-	else
-	{
-		this->CharArray = CopyCharArray(CharArray, Length);
-	}
+	this->CharArray = CopyCharArray(CharArray);
 }
 
 String::String(const String& Other)
 {
-	Length = Other.Length;
-	CharArray = CopyCharArray(Other.CharArray, Length);
+	CharArray = CopyCharArray(Other.CharArray);
 }
 
 String::~String()
@@ -77,23 +66,26 @@ String::~String()
 	delete[] CharArray;
 }
 
+int String::GetLength()
+{
+	return CalculateCharArrayLength(CharArray) - 1;
+}
+
 const char* String::GetCharArray()
 {
-	char* returnCopy = CopyCharArray(CharArray, Length + 1, Length);
-	returnCopy[Length] = '\0';
-	return returnCopy;
+	return CopyCharArray(CharArray);
 }
 
 String String::GetSubString(int Start, int End)
 {
-	return String(CopyCharArray(&CharArray[Start], Start + End), End - Start);
+	return String(CopyCharArray(&CharArray[Start], End - Start + 1));
 }
 
 String String::ToUpperCase()
 {
 	String newStr(*this);
 
-	for (int i = 0; i < newStr.Length; i++)
+	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
 	{
 		const int charIndex = (int)newStr.CharArray[i];
 
@@ -110,7 +102,7 @@ String String::ToLowerCase()
 {
 	String newStr(*this);
 
-	for (int i = 0; i < newStr.Length; i++)
+	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
 	{
 		const int charIndex = (int)newStr.CharArray[i];
 
@@ -125,12 +117,6 @@ String String::ToLowerCase()
 
 std::ostream& operator<<(std::ostream& Output, const String& String)
 {
-	for (int i = 0; i < String.Length; i++) 
-	{
-		Output << String.CharArray[i];
-	}
-
-	Output << '\0';
-
+	Output << String.CharArray;
 	return Output;
 }

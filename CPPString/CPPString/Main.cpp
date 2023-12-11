@@ -7,6 +7,9 @@ using namespace std;
 void main() 
 {
 	String Text("Water of Baikal!");
+	cout << Text << endl << Text.GetLength() << endl;
+
+	cout << Text.GetSubString(2, 2);
 
 	String waterCut = Text.GetSubString(0, 5);
 	cout << waterCut << endl << waterCut.GetLength() << endl;
