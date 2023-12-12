@@ -29,7 +29,7 @@ private:
 
 public:
 
-	int GetLength();
+	int GetLength() const;
 	const char* GetCharArray();
 
 	static String FromInt(int Number);
@@ -39,6 +39,8 @@ public:
 	String ToLowerCase();
 	String Replace(const char& CharToReplace, const char& Replacement);
 	String Reverse();
+
+	bool StartsWith(const String& Start);
 
 	String& operator+(const String& Other);
 	String& operator=(const String& Other);

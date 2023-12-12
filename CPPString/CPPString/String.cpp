@@ -71,7 +71,7 @@ String::~String()
 	delete[] CharArray;
 }
 
-int String::GetLength()
+int String::GetLength() const
 {
 	return CalculateCharArrayLength(CharArray) - 1;
 }
@@ -174,10 +174,26 @@ String String::Reverse()
 	return newStr;
 }
 
+bool String::StartsWith(const String& Start)
+{
+	const int StartLength = Start.GetLength();
+
+	if (GetLength() < StartLength)
+		return false;
+
+	for (int i = 0; i < StartLength; i++) 
+	{
+		if (Start.CharArray[i] != CharArray[i])
+			return false;
+	}
+
+	return true;
+}
+
 String& String::operator+(const String& Other)
 {
 	const int Length = GetLength();
-	const int CombinedLength = Length + CalculateCharArrayLength(Other.CharArray);
+	const int CombinedLength = Length + Other.GetLength() + 1;
 
 	char* newCharArray = new char[CombinedLength];
 
@@ -245,8 +261,8 @@ std::ostream& operator<<(std::ostream& Output, const String& String)
 
 bool operator==(const String& First, const String& Second)
 {
-	const int FirstLength = String::CalculateCharArrayLength(First.CharArray);
-	const int SecondLength = String::CalculateCharArrayLength(Second.CharArray);
+	const int FirstLength = First.GetLength();
+	const int SecondLength = Second.GetLength();
 
 	if (FirstLength != SecondLength)
 		return false;

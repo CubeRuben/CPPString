@@ -48,4 +48,9 @@ void main()
 
 	String compare1("Yes"), compare2("No"), compare3("oN");
 	cout << (compare1 == compare2) << (compare2 != compare3) << (compare2 == compare3.Reverse()) << endl;
+
+	String anotherText("Yay!");
+	cout << anotherText.StartsWith("Yay!") << anotherText.StartsWith("No") << anotherText.Reverse().StartsWith("!ya") << endl;
+	cout << anotherText.StartsWith("Yay!  ");
+
 }
