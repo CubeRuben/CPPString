@@ -42,4 +42,7 @@ void main()
 	cout << Word1 + Space + Word2 << endl;
 
 	cout << String::FromInt(5123) << " + " << String::FromInt(14124) << endl;
+
+	String number = String::FromInt(123);
+	cout << (number + number.GetSubString(0, 1).Reverse()) * 10 << endl;
 }

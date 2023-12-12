@@ -176,10 +176,10 @@ String String::Reverse()
 
 String& String::operator+(const String& Other)
 {
-	const int length = GetLength();
-	const int combinedLength = length + CalculateCharArrayLength(Other.CharArray);
+	const int Length = GetLength();
+	const int CombinedLength = Length + CalculateCharArrayLength(Other.CharArray);
 
-	char* newCharArray = new char[combinedLength];
+	char* newCharArray = new char[CombinedLength];
 
 	for (int i = 0; CharArray[i] != '\0'; i++) 
 	{
@@ -188,10 +188,10 @@ String& String::operator+(const String& Other)
 
 	for (int i = 0; Other.CharArray[i] != '\0'; i++)
 	{
-		newCharArray[i + length] = Other.CharArray[i];
+		newCharArray[i + Length] = Other.CharArray[i];
 	}
 
-	newCharArray[combinedLength - 1] = '\0';
+	newCharArray[CombinedLength - 1] = '\0';
 
 	delete[] CharArray;
 	CharArray = newCharArray;
@@ -203,6 +203,30 @@ String& String::operator=(const String& Other)
 {
 	delete[] CharArray;
 	CharArray = CopyCharArray(Other.CharArray);
+	return *this;
+}
+
+String& String::operator*(const int& Other)
+{
+	if (Other <= 1)
+		return *this;
+
+	const int Length = GetLength();
+	const int NewLength = Length * Other + 1;
+	char* newCharArray = new char[NewLength];
+
+	for (int i = 0; CharArray[i] != '\0'; i++)
+	{
+		for (int a = 0; a < Other; a++) 
+		{
+			newCharArray[Length * a + i] = CharArray[i];
+		}
+	}
+
+	newCharArray[NewLength - 1] = '\0';
+	delete[] CharArray;
+	CharArray = newCharArray;
+
 	return *this;
 }
 

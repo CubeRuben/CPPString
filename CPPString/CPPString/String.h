@@ -42,6 +42,7 @@ public:
 
 	String& operator+(const String& Other);
 	String& operator=(const String& Other);
+	String& operator*(const int& Other);
 	const char& operator[](int Index);
 
 	friend std::ostream& operator<<(std::ostream& Output, const String& String);
