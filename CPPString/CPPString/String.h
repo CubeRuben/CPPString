@@ -46,5 +46,8 @@ public:
 	const char& operator[](int Index);
 
 	friend std::ostream& operator<<(std::ostream& Output, const String& String);
+
+	friend bool operator==(const String& First, const String& Second);
+	friend bool operator!=(const String& First, const String& Second);
 };
 

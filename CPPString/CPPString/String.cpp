@@ -242,3 +242,25 @@ std::ostream& operator<<(std::ostream& Output, const String& String)
 {
 	return Output << String.CharArray;
 }
+
+bool operator==(const String& First, const String& Second)
+{
+	const int FirstLength = String::CalculateCharArrayLength(First.CharArray);
+	const int SecondLength = String::CalculateCharArrayLength(Second.CharArray);
+
+	if (FirstLength != SecondLength)
+		return false;
+
+	for (int i = 0; i < FirstLength; i++) 
+	{
+		if (First.CharArray[i] != Second.CharArray[i])
+			return false;
+	}
+
+	return true;
+}
+
+bool operator!=(const String& First, const String& Second)
+{
+	return !(First == Second);
+}

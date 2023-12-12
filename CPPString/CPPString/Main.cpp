@@ -45,4 +45,7 @@ void main()
 
 	String number = String::FromInt(123);
 	cout << (number + number.GetSubString(0, 1).Reverse()) * 10 << endl;
+
+	String compare1("Yes"), compare2("No"), compare3("oN");
+	cout << (compare1 == compare2) << (compare2 != compare3) << (compare2 == compare3.Reverse()) << endl;
 }
