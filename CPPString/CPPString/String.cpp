@@ -61,6 +61,11 @@ String::String(const String& Other)
 	CharArray = CopyCharArray(Other.CharArray);
 }
 
+String::String(char* CharArray) 
+{
+	this->CharArray = CharArray;
+}
+
 String::~String()
 {
 	delete[] CharArray;
@@ -73,63 +78,143 @@ int String::GetLength()
 
 const char* String::GetCharArray()
 {
-	return CopyCharArray(CharArray);
+	return CharArray;
+}
+
+String String::FromInt(int Number)
+{
+	const int NumberLength = log10(Number) + 1;
+
+	char* newCharArray = new char[NumberLength + 1];
+
+	for (int i = 0; i < NumberLength; i++) 
+	{
+		int digit = Number / (int)pow(10, i) % 10;
+		newCharArray[NumberLength - i - 1] = (char)((int)'0' + digit);
+	}
+
+	newCharArray[NumberLength] = '\0';
+
+	return String(newCharArray);
 }
 
 String String::GetSubString(int Start, int End)
 {
-	return String(CopyCharArray(&(*this)[Start], End - Start + 1));
+	if (Start < 0 || Start >= GetLength())
+		throw std::out_of_range("Requested character out of range");
+
+	if (End < 0 || End >= GetLength())
+		throw std::out_of_range("Requested character out of range");
+
+	return String(CopyCharArray(&this->CharArray[Start], End - Start + 1));
 }
 
-String& String::ToUpperCase()
-{
-	for (int i = 0; CharArray[i] != '\0'; i++)
-	{
-		const int charIndex = (int)CharArray[i];
-
-		if (charIndex >= (int)'a' && charIndex <= (int)'z')
-		{
-			CharArray[i] = charIndex - CharacterCaseOffset;
-		}
-	}
-
-	return *this;
-}
-
-String& String::ToLowerCase()
-{
-	for (int i = 0; CharArray[i] != '\0'; i++)
-	{
-		const int charIndex = (int)CharArray[i];
-
-		if (charIndex >= (int)'A' && charIndex <= (int)'Z')
-		{
-			CharArray[i] = charIndex + CharacterCaseOffset;
-		}
-	}
-
-	return *this;
-}
-
-String& String::Replace(const char& CharToReplace, const char& Replacement)
+String String::ToUpperCase()
 {
 	String newStr(*this);
 
+	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
+	{
+		const int charIndex = (int)newStr.CharArray[i];
 
+		if (charIndex >= (int)'a' && charIndex <= (int)'z')
+		{
+			newStr.CharArray[i] = charIndex - CharacterCaseOffset;
+		}
+	}
 
 	return newStr;
 }
 
-const char& String::operator[](int index)
+String String::ToLowerCase()
 {
-	if (index < 0 || index >= GetLength())
+	String newStr(*this);
+
+	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
+	{
+		const int charIndex = (int)newStr.CharArray[i];
+
+		if (charIndex >= (int)'A' && charIndex <= (int)'Z')
+		{
+			newStr.CharArray[i] = charIndex + CharacterCaseOffset;
+		}
+	}
+
+	return newStr;
+}
+
+String String::Replace(const char& CharToReplace, const char& Replacement)
+{
+	String newStr(*this);
+
+	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
+	{
+		if (newStr.CharArray[i] == CharToReplace)
+		{
+			newStr.CharArray[i] = Replacement;
+		}
+	}
+
+	return newStr;
+}
+
+String String::Reverse()
+{
+	String newStr(*this);
+
+	const int length = newStr.GetLength();
+
+	for (int i = 0; i < length / 2; i++)
+	{
+		char temp = newStr.CharArray[i];
+		newStr.CharArray[i] = newStr.CharArray[length - 1 - i];
+		newStr.CharArray[length - 1 - i] = temp;
+	}
+
+	return newStr;
+}
+
+String& String::operator+(const String& Other)
+{
+	const int length = GetLength();
+	const int combinedLength = length + CalculateCharArrayLength(Other.CharArray);
+
+	char* newCharArray = new char[combinedLength];
+
+	for (int i = 0; CharArray[i] != '\0'; i++) 
+	{
+		newCharArray[i] = CharArray[i];
+	}
+
+	for (int i = 0; Other.CharArray[i] != '\0'; i++)
+	{
+		newCharArray[i + length] = Other.CharArray[i];
+	}
+
+	newCharArray[combinedLength - 1] = '\0';
+
+	delete[] CharArray;
+	CharArray = newCharArray;
+
+	return *this;
+}
+
+String& String::operator=(const String& Other)
+{
+	delete[] CharArray;
+	CharArray = CopyCharArray(Other.CharArray);
+	return *this;
+}
+
+const char& String::operator[](int Index)
+{
+	if (Index < 0 || Index >= GetLength())
 		throw std::out_of_range("Requested character out of range");
 
-	return CharArray[index];
+	return CharArray[Index];
 }
 
 std::ostream& operator<<(std::ostream& Output, const String& String)
 {
-	Output << String.CharArray;
-	return Output;
+	return Output << String.CharArray;
 }

@@ -14,6 +14,8 @@ public:
 
 protected:
 
+	String(char* CharArray);
+
 	static const int CharacterCaseOffset;
 	static char* GetNoneString();
 
@@ -28,15 +30,19 @@ private:
 public:
 
 	int GetLength();
-
 	const char* GetCharArray();
 
-	String GetSubString(int Start, int End);
-	String& ToUpperCase();
-	String& ToLowerCase();
-	String& Replace(const char& CharToReplace, const char& Replacement);
+	static String FromInt(int Number);
 
-	const char& operator[](int index);
+	String GetSubString(int Start, int End);
+	String ToUpperCase();
+	String ToLowerCase();
+	String Replace(const char& CharToReplace, const char& Replacement);
+	String Reverse();
+
+	String& operator+(const String& Other);
+	String& operator=(const String& Other);
+	const char& operator[](int Index);
 
 	friend std::ostream& operator<<(std::ostream& Output, const String& String);
 };
