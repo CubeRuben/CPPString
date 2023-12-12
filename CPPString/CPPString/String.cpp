@@ -174,6 +174,37 @@ String String::Reverse()
 	return newStr;
 }
 
+int String::Find(const char& Char)
+{
+	for (int i = 0; CharArray[i] != '\0'; i++)
+	{
+		if (CharArray[i] == Char)
+			return i;
+	}
+
+	return -1;
+}
+
+std::vector<String> String::Split(const char& Separator)
+{
+	std::vector<String> retList;
+	String left(*this);
+
+	while(true) 
+	{
+		const int findIndex = left.Find(Separator);
+
+		if (findIndex == -1) 
+		{
+			retList.push_back(left);
+			return retList;
+		}
+
+		retList.push_back(left.GetSubString(0, findIndex - 1));
+		left = left.GetSubString(findIndex + 1, left.GetLength() - 1);
+	}
+}
+
 bool String::StartsWith(const String& Start)
 {
 	const int StartLength = Start.GetLength();

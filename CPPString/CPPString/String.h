@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 class String
 {
@@ -39,6 +40,10 @@ public:
 	String ToLowerCase();
 	String Replace(const char& CharToReplace, const char& Replacement);
 	String Reverse();
+
+	int Find(const char& Char);
+
+	std::vector<String> Split(const char& Separator);
 
 	bool StartsWith(const String& Start);
 

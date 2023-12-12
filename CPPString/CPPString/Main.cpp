@@ -51,6 +51,12 @@ void main()
 
 	String anotherText("Yay!");
 	cout << anotherText.StartsWith("Yay!") << anotherText.StartsWith("No") << anotherText.Reverse().StartsWith("!ya") << endl;
-	cout << anotherText.StartsWith("Yay!  ");
+	cout << anotherText.StartsWith("Yay!  ") << endl;
 
+	cout << Text.Find('B') << endl;
+
+	for (String el : Text.Split(' ')) 
+	{
+		cout << el << endl;
+	}
 }
