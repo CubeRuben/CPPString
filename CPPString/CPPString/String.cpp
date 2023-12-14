@@ -302,9 +302,20 @@ const char& String::operator[](int Index)
 	return CharArray[Index];
 }
 
-std::ostream& operator<<(std::ostream& Output, const String& String)
+std::ostream& operator<<(std::ostream& Output, const String& Other)
 {
-	return Output << String.CharArray;
+	return Output << Other.CharArray;
+}
+
+std::istream& operator>>(std::istream& Input, String& Other)
+{
+	Other = String();
+	
+	char line[1024];
+	Input.getline(line, 1024, '\n');
+	Other = Other + String(String::CopyCharArray(line));
+
+	return Input;
 }
 
 bool operator==(const String& First, const String& Second)

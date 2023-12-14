@@ -68,4 +68,12 @@ void main()
 		}
 	}
 	cout << String("-") * 30 << endl;
+
+	String UserInput;
+	cin >> UserInput;
+	cout << UserInput << endl;
+
+	cin >> UserInput;
+	cout << UserInput << endl;
+
 }

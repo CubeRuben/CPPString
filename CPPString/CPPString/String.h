@@ -53,7 +53,8 @@ public:
 	String operator*(const int& Other);
 	const char& operator[](int Index);
 
-	friend std::ostream& operator<<(std::ostream& Output, const String& String);
+	friend std::ostream& operator<<(std::ostream& Output, const String& Other);
+	friend std::istream& operator>>(std::istream& Input, String& Other);
 
 	friend bool operator==(const String& First, const String& Second);
 	friend bool operator!=(const String& First, const String& Second);
