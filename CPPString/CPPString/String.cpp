@@ -269,28 +269,29 @@ String& String::operator=(const String& Other)
 	return *this;
 }
 
-String& String::operator*(const int& Other)
+String String::operator*(const int& Other)
 {
 	if (Other <= 1)
 		return *this;
 
 	const int Length = GetLength();
 	const int NewLength = Length * Other + 1;
-	char* newCharArray = new char[NewLength];
+
+	String newStr;
+	delete[] newStr.CharArray;
+	newStr.CharArray = new char[NewLength];
 
 	for (int i = 0; CharArray[i] != '\0'; i++)
 	{
 		for (int a = 0; a < Other; a++) 
 		{
-			newCharArray[Length * a + i] = CharArray[i];
+			newStr.CharArray[Length * a + i] = CharArray[i];
 		}
 	}
 
-	newCharArray[NewLength - 1] = '\0';
-	delete[] CharArray;
-	CharArray = newCharArray;
+	newStr.CharArray[NewLength - 1] = '\0';
 
-	return *this;
+	return newStr;
 }
 
 const char& String::operator[](int Index)
