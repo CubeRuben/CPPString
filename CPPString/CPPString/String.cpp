@@ -152,6 +152,23 @@ String String::Replace(const char& CharToReplace, const char& Replacement)
 		if (newStr.CharArray[i] == CharToReplace)
 		{
 			newStr.CharArray[i] = Replacement;
+			return newStr;
+		}
+	}
+
+	return newStr;
+}
+
+
+String String::ReplaceAll(const char& CharToReplace, const char& Replacement)
+{
+	String newStr(*this);
+
+	for (int i = 0; newStr.CharArray[i] != '\0'; i++)
+	{
+		if (newStr.CharArray[i] == CharToReplace)
+		{
+			newStr.CharArray[i] = Replacement;
 		}
 	}
 
@@ -221,29 +238,28 @@ bool String::StartsWith(const String& Start)
 	return true;
 }
 
-String& String::operator+(const String& Other)
+String String::operator+(const String& Other)
 {
 	const int Length = GetLength();
 	const int CombinedLength = Length + Other.GetLength() + 1;
 
-	char* newCharArray = new char[CombinedLength];
+	String newStr;
+	delete[] newStr.CharArray;
+	newStr.CharArray = new char[CombinedLength];
 
 	for (int i = 0; CharArray[i] != '\0'; i++) 
 	{
-		newCharArray[i] = CharArray[i];
+		newStr.CharArray[i] = CharArray[i];
 	}
 
 	for (int i = 0; Other.CharArray[i] != '\0'; i++)
 	{
-		newCharArray[i + Length] = Other.CharArray[i];
+		newStr.CharArray[i + Length] = Other.CharArray[i];
 	}
 
-	newCharArray[CombinedLength - 1] = '\0';
+	newStr.CharArray[CombinedLength - 1] = '\0';
 
-	delete[] CharArray;
-	CharArray = newCharArray;
-
-	return *this;
+	return newStr;
 }
 
 String& String::operator=(const String& Other)

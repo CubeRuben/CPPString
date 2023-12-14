@@ -39,6 +39,7 @@ public:
 	String ToUpperCase();
 	String ToLowerCase();
 	String Replace(const char& CharToReplace, const char& Replacement);
+	String ReplaceAll(const char& CharToReplace, const char& Replacement);
 	String Reverse();
 
 	int Find(const char& Char);
@@ -47,7 +48,7 @@ public:
 
 	bool StartsWith(const String& Start);
 
-	String& operator+(const String& Other);
+	String operator+(const String& Other);
 	String& operator=(const String& Other);
 	String& operator*(const int& Other);
 	const char& operator[](int Index);

@@ -6,7 +6,18 @@ using namespace std;
 
 void main() 
 {
+	String ReprText("This text will help to represent my own string class");
 
+	cout << "Adding" << endl;
+	cout << ReprText + "-" + ReprText << endl;
+	cout << String("-") * 30 << endl;
+
+	cout << "Case Changing" << endl;
+	cout << ReprText.ToLowerCase() << endl << ReprText.ToUpperCase() << endl;
+	cout << String("-") * 30 << endl;
+
+
+	return;
 
 	String Text("Water of Baikal!");
 	cout << Text << ' ' << Text.GetLength() << endl;
